@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01DEP313-01 Assignment Submission Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #003366;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .assignment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .assignment-button {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .assignment-button:hover {
+            background-color: #004c99;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            width: 70%;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: black;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], textarea, input[type="file"], input[type="url"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .assignment-info {
+            margin-bottom: 20px;
+        }
+        .submission-options {
+            margin-bottom: 20px;
+        }
+        .option-tabs {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .option-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+        }
+        .option-tab.active {
+            background-color: white;
+            border-bottom: 1px solid white;
+            margin-bottom: -1px;
+        }
+        .submission-option {
+            display: none;
+        }
+        .submission-option.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>01DEP313-01 Assignment Submission Portal</h1>
+        <p>Submit your assignments for weeks 2-11</p>
+    </header>
+
+    <div class="container">
+        <h2>Assignment Submission</h2>
+        <p>Click on the appropriate week to open the submission form:</p>
+        
+        <div class="assignment-grid">
+            <button class="assignment-button" onclick="openModal(2)">Week 2 Assignment</button>
+            <button class="assignment-button" onclick="openModal(3)">Week 3 Assignment</button>
+            <button class="assignment-button" onclick="openModal(4)">Week 4 Assignment</button>
+            <button class="assignment-button" onclick="openModal(5)">Week 5 Assignment</button>
+            <button class="assignment-button" onclick="openModal(6)">Week 6 Assignment</button>
+            <button class="assignment-button" onclick="openModal(7)">Week 7 Assignment</button>
+            <button class="assignment-button" onclick="openModal(8)">Week 8 Assignment</button>
+            <button class="assignment-button" onclick="openModal(9)">Week 9 Assignment</button>
+            <button class="assignment-button" onclick="openModal(10)">Week 10 Assignment</button>
+            <button class="assignment-button" onclick="openModal(11)">Week 11 Assignment</button>
+        </div>
+    </div>
+
+    <div id="assignmentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Submit Assignment</h2>
+            
+            <div class="assignment-info">
+                <h3 id="assignmentTitle">Assignment Details</h3>
+                <p id="assignmentDescription">Assignment description will appear here based on the selected week.</p>
+                <p><strong>Due Date:</strong> <span id="dueDate"></span></p>
+            </div>
+            
+            <form id="assignmentForm">
+                <label for="studentName">Student Name:</label>
+                <input type="text" id="studentName" name="studentName" required>
+                
+                <label for="studentID">Student ID:</label>
+                <input type="text" id="studentID" name="studentID" required>
+                
+                <div class="submission-options">
+                    <div class="option-tabs">
+                        <div id="fileTab" class="option-tab active">Upload File</div>
+                        <div id="linkTab" class="option-tab">Submit Link</div>
+                    </div>
+                    
+                    <div id="fileOption" class="submission-option active">
+                        <label for="assignmentFile">Upload Assignment (PDF, DOC, or DOCX):</label>
+                        <input type="file" id="assignmentFile" name="assignmentFile" accept=".pdf,.doc,.docx">
+                    </div>
+                    
+                    <div id="linkOption" class="submission-option">
+                        <label for="assignmentLink">Assignment Link (Google Drive, GitHub, etc.):</label>
+                        <input type="url" id="assignmentLink" name="assignmentLink" placeholder="https://...">
+                    </div>
+                </div>
+                
+                <label for="comments">Comments (Optional):</label>
+                <textarea id="comments" name="comments" rows="4"></textarea>
+                
+                <input type="submit" value="Submit Assignment">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById("assignmentModal");
+        const modalTitle = document.getElementById("modalTitle");
+        const assignmentTitle = document.getElementById("assignmentTitle");
+        const assignmentDescription = document.getElementById("assignmentDescription");
+        const dueDate = document.getElementById("dueDate");
+        const assignmentForm = document.getElementById("assignmentForm");
+        const fileOption = document.getElementById("fileOption");
+        const linkOption = document.getElementById("linkOption");
+        const fileTab = document.getElementById("fileTab");
+        const linkTab = document.getElementById("linkTab");
+        
+        // Add event listeners for the tabs
+        fileTab.addEventListener("click", function() {
+            switchSubmissionOption('file');
+        });
+        
+        linkTab.addEventListener("click", function() {
+            switchSubmissionOption('link');
+        });
+        
+        // Assignment details for each week
+        const assignments = {
+            2: {
+                title: "Week 2 Assignment",
+                description: "Complete the exercises for Week 2 and submit your work here.",
+                dueDate: "May 10, 2025"
+            },
+            3: {
+                title: "Week 3 Assignment",
+                description: "Complete the exercises for Week 3 and submit your work here.",
+                dueDate: "May 17, 2025"
+            },
+            4: {
+                title: "Week 4 Assignment",
+                description: "Complete the exercises for Week 4 and submit your work here.",
+                dueDate: "May 24, 2025"
+            },
+            5: {
+                title: "Week 5 Assignment",
+                description: "Complete the exercises for Week 5 and submit your work here.",
+                dueDate: "May 31, 2025"
+            },
+            6: {
+                title: "Week 6 Assignment",
+                description: "Complete the exercises for Week 6 and submit your work here.",
+                dueDate: "June 7, 2025"
+            },
+            7: {
+                title: "Week 7 Assignment",
+                description: "Complete the exercises for Week 7 and submit your work here.",
+                dueDate: "June 14, 2025"
+            },
+            8: {
+                title: "Week 8 Assignment",
+                description: "Complete the exercises for Week 8 and submit your work here.",
+                dueDate: "June 21, 2025"
+            },
+            9: {
+                title: "Week 9 Assignment",
+                description: "Complete the exercises for Week 9 and submit your work here.",
+                dueDate: "June 28, 2025"
+            },
+            10: {
+                title: "Week 10 Assignment",
+                description: "Complete the exercises for Week 10 and submit your work here.",
+                dueDate: "July 5, 2025"
+            },
+            11: {
+                title: "Week 11 Assignment",
+                description: "Complete the exercises for Week 11 and submit your work here.",
+                dueDate: "July 12, 2025"
+            }
+        };
+        
+        function openModal(week) {
+            const assignment = assignments[week];
+            modalTitle.textContent = `Submit ${assignment.title}`;
+            assignmentTitle.textContent = assignment.title;
+            assignmentDescription.textContent = assignment.description;
+            dueDate.textContent = assignment.dueDate;
+            
+            modal.style.display = "block";
+        }
+        
+        function closeModal() {
+            modal.style.display = "none";
+            assignmentForm.reset();
+            
+            // Reset to file option when closing
+            switchSubmissionOption('file');
+        }
+        
+        function switchSubmissionOption(option) {
+            // Remove active class from all tabs and options
+            fileTab.classList.remove('active');
+            linkTab.classList.remove('active');
+            fileOption.classList.remove('active');
+            linkOption.classList.remove('active');
+            
+            // Add active class to selected tab and option
+            if (option === 'file') {
+                fileTab.classList.add('active');
+                fileOption.classList.add('active');
+                document.getElementById('assignmentLink').removeAttribute('required');
+                document.getElementById('assignmentFile').setAttribute('required', '');
+            } else {
+                linkTab.classList.add('active');
+                linkOption.classList.add('active');
+                document.getElementById('assignmentFile').removeAttribute('required');
+                document.getElementById('assignmentLink').setAttribute('required', '');
+            }
+        }
+        
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+        
+        // Form submission
+        assignmentForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+            
+            // Check which submission option is active
+            const isFileSubmission = fileOption.classList.contains('active');
+            const isLinkSubmission = linkOption.classList.contains('active');
+            
+            // Validate that appropriate field is filled
+            if (isFileSubmission && !document.getElementById('assignmentFile').files.length) {
+                alert("Please select a file to upload.");
+                return;
+            }
+            
+            if (isLinkSubmission && !document.getElementById('assignmentLink').value) {
+                alert("Please enter a valid URL.");
+                return;
+            }
+            
+            alert("Assignment submitted successfully! In a real implementation, this would send your data to the server.");
+            closeModal();
+        });
+    </script>
+</body>
+</html>
