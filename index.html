@@ -87,7 +87,7 @@
             margin-bottom: 5px;
             font-weight: bold;
         }
-        input[type="text"], textarea, input[type="file"] {
+        input[type="text"], textarea, input[type="file"], input[type="url"] {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
@@ -108,6 +108,34 @@
         }
         .assignment-info {
             margin-bottom: 20px;
+        }
+        .submission-options {
+            margin-bottom: 20px;
+        }
+        .option-tabs {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .option-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+        }
+        .option-tab.active {
+            background-color: white;
+            border-bottom: 1px solid white;
+            margin-bottom: -1px;
+        }
+        .submission-option {
+            display: none;
+        }
+        .submission-option.active {
+            display: block;
         }
     </style>
 </head>
@@ -153,8 +181,22 @@
                 <label for="studentID">Student ID:</label>
                 <input type="text" id="studentID" name="studentID" required>
                 
-                <label for="assignmentFile">Upload Assignment (PDF, DOC, or DOCX):</label>
-                <input type="file" id="assignmentFile" name="assignmentFile" accept=".pdf,.doc,.docx" required>
+                <div class="submission-options">
+                    <div class="option-tabs">
+                        <div class="option-tab active" onclick="switchSubmissionOption('file')">Upload File</div>
+                        <div class="option-tab" onclick="switchSubmissionOption('link')">Submit Link</div>
+                    </div>
+                    
+                    <div id="fileOption" class="submission-option active">
+                        <label for="assignmentFile">Upload Assignment (PDF, DOC, or DOCX):</label>
+                        <input type="file" id="assignmentFile" name="assignmentFile" accept=".pdf,.doc,.docx">
+                    </div>
+                    
+                    <div id="linkOption" class="submission-option">
+                        <label for="assignmentLink">Assignment Link (Google Drive, GitHub, etc.):</label>
+                        <input type="url" id="assignmentLink" name="assignmentLink" placeholder="https://...">
+                    </div>
+                </div>
                 
                 <label for="comments">Comments (Optional):</label>
                 <textarea id="comments" name="comments" rows="4"></textarea>
@@ -171,6 +213,8 @@
         const assignmentDescription = document.getElementById("assignmentDescription");
         const dueDate = document.getElementById("dueDate");
         const assignmentForm = document.getElementById("assignmentForm");
+        const fileOption = document.getElementById("fileOption");
+        const linkOption = document.getElementById("linkOption");
         
         // Assignment details for each week
         const assignments = {
@@ -239,6 +283,31 @@
         function closeModal() {
             modal.style.display = "none";
             assignmentForm.reset();
+            
+            // Reset to file option when closing
+            switchSubmissionOption('file');
+        }
+        
+        function switchSubmissionOption(option) {
+            const tabs = document.querySelectorAll('.option-tab');
+            const options = document.querySelectorAll('.submission-option');
+            
+            // Remove active class from all tabs and options
+            tabs.forEach(tab => tab.classList.remove('active'));
+            options.forEach(opt => opt.classList.remove('active'));
+            
+            // Add active class to selected tab and option
+            if (option === 'file') {
+                tabs[0].classList.add('active');
+                fileOption.classList.add('active');
+                document.getElementById('assignmentLink').removeAttribute('required');
+                document.getElementById('assignmentFile').setAttribute('required', '');
+            } else {
+                tabs[1].classList.add('active');
+                linkOption.classList.add('active');
+                document.getElementById('assignmentFile').removeAttribute('required');
+                document.getElementById('assignmentLink').setAttribute('required', '');
+            }
         }
         
         // Close modal when clicking outside of it
@@ -251,7 +320,23 @@
         // Form submission
         assignmentForm.addEventListener("submit", function(e) {
             e.preventDefault();
-            alert("Assignment submitted successfully! In a real implementation, this would send your file to the server.");
+            
+            // Check which submission option is active
+            const isFileSubmission = fileOption.classList.contains('active');
+            const isLinkSubmission = linkOption.classList.contains('active');
+            
+            // Validate that appropriate field is filled
+            if (isFileSubmission && !document.getElementById('assignmentFile').files.length) {
+                alert("Please select a file to upload.");
+                return;
+            }
+            
+            if (isLinkSubmission && !document.getElementById('assignmentLink').value) {
+                alert("Please enter a valid URL.");
+                return;
+            }
+            
+            alert("Assignment submitted successfully! In a real implementation, this would send your data to the server.");
             closeModal();
         });
     </script>
