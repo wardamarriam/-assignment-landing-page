@@ -1,381 +1,385 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>01DEP313-01 Assignment Submission Portal</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        header {
-            background-color: #003366;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        h1 {
-            margin: 0;
-        }
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .assignment-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .assignment-button {
-            background-color: #0066cc;
-            color: white;
-            border: none;
-            padding: 20px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .assignment-button:hover {
-            background-color: #004c99;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            overflow-y: auto; /* Added to ensure scrolling works */
-        }
-        .modal-content {
-            background-color: white;
-            margin: 5% auto; /* Reduced from 10% to 5% */
-            padding: 20px;
-            width: 70%;
-            border-radius: 5px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            max-height: 90vh; /* Added max height */
-            overflow-y: auto; /* Added scroll for overflow */
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .close:hover {
-            color: black;
-        }
-        form {
-            margin-top: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input[type="text"], textarea, input[type="file"], input[type="url"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            display: block; /* Ensure it's a block element */
-            width: 100%; /* Make it full width */
-            margin-top: 15px; /* Add some space above */
-            margin-bottom: 15px; /* Add some space below */
-            font-size: 16px; /* Make text more visible */
-        }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-        .assignment-info {
-            margin-bottom: 20px;
-        }
-        .submission-options {
-            margin-bottom: 20px;
-        }
-        .option-tabs {
-            display: flex;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #ddd;
-        }
-        .option-tab {
-            padding: 10px 20px;
-            cursor: pointer;
-            background-color: #f1f1f1;
-            border: 1px solid #ddd;
-            border-bottom: none;
-            border-radius: 5px 5px 0 0;
-            margin-right: 5px;
-        }
-        .option-tab.active {
-            background-color: white;
-            border-bottom: 1px solid white;
-            margin-bottom: -1px;
-        }
-        .submission-option {
-            display: none;
-        }
-        .submission-option.active {
-            display: block;
-        }
-        /* Added for submit button visibility */
-        .submit-button-container {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>University Assignment Landing Page - Warda Marriam</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      background: linear-gradient(135deg, #663399, #5B3256);
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+      border-radius: 8px 8px 0 0;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    
+    .student-id {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin-bottom: 20px;
+    }
+    
+    .temple-icon {
+      margin-bottom: 15px;
+      font-size: 3rem;
+    }
+    
+    /* Main dashboard view */
+    .dashboard-view {
+      display: block;
+    }
+    
+    .assignment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    
+    .assignment-button {
+      background-color: #fff;
+      color: #5B3256;
+      border: 2px solid #5B3256;
+      border-radius: 8px;
+      padding: 20px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .assignment-button:hover {
+      background-color: #5B3256;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Assignment view */
+    .assignment-view {
+      display: none;
+    }
+    
+    .assignment-content {
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+    
+    .assignment-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    textarea {
+      width: 100%;
+      height: 300px;
+      padding: 15px;
+      margin: 20px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      resize: vertical;
+    }
+    
+    .submit-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    
+    .submit-button:hover {
+      background-color: #3e8e41;
+    }
+    
+    .back-button {
+      display: inline-block;
+      margin-top: 20px;
+      background-color: #5B3256;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .back-button:hover {
+      background-color: #452640;
+    }
+    
+    /* Admin panel */
+    #adminPanel {
+      display: none;
+      margin-top: 20px;
+      background-color: #f0f0f0;
+      padding: 15px;
+      border-radius: 5px;
+      text-align: left;
+    }
+    
+    #adminPanel input, #adminPanel select {
+      padding: 8px;
+      margin-top: 5px;
+    }
+    
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      color: #666;
+      font-size: 0.9rem;
+      padding: 20px 0;
+      border-top: 1px solid #ddd;
+    }
+    
+    .admin-button {
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    
+    .panel-button {
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+      color: white;
+      font-weight: 600;
+    }
+    
+    .save-button {
+      background-color: #4CAF50;
+    }
+    
+    .close-button {
+      background-color: #f44336;
+      margin-left: 10px;
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
     <header>
-        <h1>01DEP313-01 Assignment Submission Portal</h1>
-        <p>Submit your assignments for weeks 2-11</p>
+      <div class="temple-icon">🏛️</div>
+      <h1>Warda Marriam</h1>
+      <div class="student-id">Student ID: 2417471</div>
     </header>
-
-    <div class="container">
-        <h2>Assignment Submission</h2>
-        <p>Click on the appropriate week to open the submission form:</p>
-        
-        <div class="assignment-grid">
-            <button class="assignment-button" onclick="openModal(2)">Week 2 Assignment</button>
-            <button class="assignment-button" onclick="openModal(3)">Week 3 Assignment</button>
-            <button class="assignment-button" onclick="openModal(4)">Week 4 Assignment</button>
-            <button class="assignment-button" onclick="openModal(5)">Week 5 Assignment</button>
-            <button class="assignment-button" onclick="openModal(6)">Week 6 Assignment</button>
-            <button class="assignment-button" onclick="openModal(7)">Week 7 Assignment</button>
-            <button class="assignment-button" onclick="openModal(8)">Week 8 Assignment</button>
-            <button class="assignment-button" onclick="openModal(9)">Week 9 Assignment</button>
-            <button class="assignment-button" onclick="openModal(10)">Week 10 Assignment</button>
-            <button class="assignment-button" onclick="openModal(11)">Week 11 Assignment</button>
-        </div>
+    
+    <!-- Dashboard View -->
+    <div id="dashboardView" class="dashboard-view">
+      <div class="assignment-grid">
+        <button class="assignment-button" data-week="2" data-url="" data-title="Week 2 Assignment">Week 2 Assignment</button>
+        <button class="assignment-button" data-week="3" data-url="" data-title="Week 3 Assignment">Week 3 Assignment</button>
+        <button class="assignment-button" data-week="4" data-url="" data-title="Week 4 Assignment">Week 4 Assignment</button>
+        <button class="assignment-button" data-week="5" data-url="" data-title="Week 5 Assignment">Week 5 Assignment</button>
+        <button class="assignment-button" data-week="6" data-url="" data-title="Week 6 Assignment">Week 6 Assignment</button>
+        <button class="assignment-button" data-week="7" data-url="" data-title="Week 7 Assignment">Week 7 Assignment</button>
+        <button class="assignment-button" data-week="8" data-url="" data-title="Week 8 Assignment">Week 8 Assignment</button>
+        <button class="assignment-button" data-week="9" data-url="" data-title="Week 9 Assignment">Week 9 Assignment</button>
+        <button class="assignment-button" data-week="10" data-url="" data-title="Week 10 Assignment">Week 10 Assignment</button>
+        <button class="assignment-button" data-week="11" data-url="" data-title="Week 11 Assignment">Week 11 Assignment</button>
+      </div>
     </div>
-
-    <div id="assignmentModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle">Submit Assignment</h2>
-            
-            <div class="assignment-info">
-                <h3 id="assignmentTitle">Assignment Details</h3>
-                <p id="assignmentDescription">Assignment description will appear here based on the selected week.</p>
-                <p><strong>Due Date:</strong> <span id="dueDate"></span></p>
-            </div>
-            
-            <form id="assignmentForm">
-                <label for="studentName">Student Name:</label>
-                <input type="text" id="studentName" name="studentName" required>
-                
-                <label for="studentID">Student ID:</label>
-                <input type="text" id="studentID" name="studentID" required>
-                
-                <div class="submission-options">
-                    <div class="option-tabs">
-                        <div class="option-tab active" onclick="switchSubmissionOption('file')">Upload File</div>
-                        <div class="option-tab" onclick="switchSubmissionOption('link')">Submit Link</div>
-                    </div>
-                    
-                    <div id="fileOption" class="submission-option active">
-                        <label for="assignmentFile">Upload Assignment (PDF, DOC, or DOCX):</label>
-                        <input type="file" id="assignmentFile" name="assignmentFile" accept=".pdf,.doc,.docx">
-                    </div>
-                    
-                    <div id="linkOption" class="submission-option">
-                        <label for="assignmentLink">Assignment Link (Google Drive, GitHub, etc.):</label>
-                        <input type="url" id="assignmentLink" name="assignmentLink" placeholder="https://...">
-                    </div>
-                </div>
-                
-                <label for="comments">Comments (Optional):</label>
-                <textarea id="comments" name="comments" rows="4"></textarea>
-                
-                <!-- Submit button container with highlight -->
-                <div class="submit-button-container">
-                    <input type="submit" value="Submit Assignment">
-                </div>
-            </form>
-        </div>
+    
+    <!-- Assignment View -->
+    <div id="assignmentView" class="assignment-view">
+      <div class="assignment-header">
+        <h2 id="assignmentTitle">Assignment</h2>
+        <p>Warda Marriam | Student ID: 2417471</p>
+      </div>
+      
+      <div class="assignment-content">
+        <h3>Assignment Details</h3>
+        <p>This is the submission page for your assignment. Please enter your work in the text area below or upload your file.</p>
+        
+        <h4 style="margin-top: 20px;">Instructions:</h4>
+        <p>Complete the following tasks related to the assignment material:</p>
+        <ul style="margin-left: 20px; margin-bottom: 20px;">
+          <li>Task 1: Answer questions based on the lecture material</li>
+          <li>Task 2: Complete the practical exercise</li>
+          <li>Task 3: Write a reflection on what you've learned</li>
+        </ul>
+        
+        <form id="assignmentForm">
+          <h4>Assignment Submission:</h4>
+          <textarea placeholder="Enter your assignment here..."></textarea>
+          
+          <div>
+            <p>Or upload your assignment file:</p>
+            <input type="file" name="assignment-file">
+          </div>
+          
+          <button type="submit" class="submit-button">Submit Assignment</button>
+        </form>
+        
+        <button id="backButton" class="back-button">Back to Dashboard</button>
+      </div>
     </div>
-
-    <script>
-        const modal = document.getElementById("assignmentModal");
-        const modalTitle = document.getElementById("modalTitle");
-        const assignmentTitle = document.getElementById("assignmentTitle");
-        const assignmentDescription = document.getElementById("assignmentDescription");
-        const dueDate = document.getElementById("dueDate");
-        const assignmentForm = document.getElementById("assignmentForm");
-        const fileOption = document.getElementById("fileOption");
-        const linkOption = document.getElementById("linkOption");
-        
-        // Assignment details for each week
-        const assignments = {
-            2: {
-                title: "Week 2 Assignment",
-                description: "Complete the exercises for Week 2 and submit your work here.",
-                dueDate: "May 10, 2025"
-            },
-            3: {
-                title: "Week 3 Assignment",
-                description: "Complete the exercises for Week 3 and submit your work here.",
-                dueDate: "May 17, 2025"
-            },
-            4: {
-                title: "Week 4 Assignment",
-                description: "Complete the exercises for Week 4 and submit your work here.",
-                dueDate: "May 24, 2025"
-            },
-            5: {
-                title: "Week 5 Assignment",
-                description: "Complete the exercises for Week 5 and submit your work here.",
-                dueDate: "May 31, 2025"
-            },
-            6: {
-                title: "Week 6 Assignment",
-                description: "Complete the exercises for Week 6 and submit your work here.",
-                dueDate: "June 7, 2025"
-            },
-            7: {
-                title: "Week 7 Assignment",
-                description: "Complete the exercises for Week 7 and submit your work here.",
-                dueDate: "June 14, 2025"
-            },
-            8: {
-                title: "Week 8 Assignment",
-                description: "Complete the exercises for Week 8 and submit your work here.",
-                dueDate: "June 21, 2025"
-            },
-            9: {
-                title: "Week 9 Assignment",
-                description: "Complete the exercises for Week 9 and submit your work here.",
-                dueDate: "June 28, 2025"
-            },
-            10: {
-                title: "Week 10 Assignment",
-                description: "Complete the exercises for Week 10 and submit your work here.",
-                dueDate: "July 5, 2025"
-            },
-            11: {
-                title: "Week 11 Assignment",
-                description: "Complete the exercises for Week 11 and submit your work here.",
-                dueDate: "July 12, 2025"
-            }
-        };
-        
-        function openModal(week) {
-            const assignment = assignments[week];
-            modalTitle.textContent = `Submit ${assignment.title}`;
-            assignmentTitle.textContent = assignment.title;
-            assignmentDescription.textContent = assignment.description;
-            dueDate.textContent = assignment.dueDate;
-            
-            modal.style.display = "block";
-            
-            // Reset the form when opening
-            assignmentForm.reset();
-            switchSubmissionOption('file');
-            
-            // Ensure the submit button is visible by scrolling to it
-            setTimeout(() => {
-                document.querySelector('.submit-button-container').scrollIntoView(false);
-            }, 100);
-        }
-        
-        function closeModal() {
-            modal.style.display = "none";
-            assignmentForm.reset();
-            
-            // Reset to file option when closing
-            switchSubmissionOption('file');
-        }
-        
-        function switchSubmissionOption(option) {
-            const tabs = document.querySelectorAll('.option-tab');
-            const options = document.querySelectorAll('.submission-option');
-            
-            // Remove active class from all tabs and options
-            tabs.forEach(tab => tab.classList.remove('active'));
-            options.forEach(opt => opt.classList.remove('active'));
-            
-            // Add active class to selected tab and option
-            if (option === 'file') {
-                tabs[0].classList.add('active');
-                fileOption.classList.add('active');
-                document.getElementById('assignmentLink').removeAttribute('required');
-                document.getElementById('assignmentFile').setAttribute('required', '');
-            } else {
-                tabs[1].classList.add('active');
-                linkOption.classList.add('active');
-                document.getElementById('assignmentFile').removeAttribute('required');
-                document.getElementById('assignmentLink').setAttribute('required', '');
-            }
-            
-            // Ensure the submit button is visible when switching tabs
-            setTimeout(() => {
-                document.querySelector('.submit-button-container').scrollIntoView(false);
-            }, 100);
-        }
-        
-        // Close modal when clicking outside of it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
-        
-        // Form submission
-        assignmentForm.addEventListener("submit", function(e) {
-            e.preventDefault();
-            
-            // Check which submission option is active
-            const isFileSubmission = fileOption.classList.contains('active');
-            const isLinkSubmission = linkOption.classList.contains('active');
-            
-            // Validate that appropriate field is filled
-            if (isFileSubmission && !document.getElementById('assignmentFile').files.length) {
-                alert("Please select a file to upload.");
-                return;
-            }
-            
-            if (isLinkSubmission && !document.getElementById('assignmentLink').value) {
-                alert("Please enter a valid URL.");
-                return;
-            }
-            
-            alert("Assignment submitted successfully! In a real implementation, this would send your data to the server.");
-            closeModal();
+    
+    <footer>
+      <p>University Assignment Portal | Academic Year 2024-2025</p>
+      <button id="editLinksButton" class="admin-button">Edit Links</button>
+      
+      <!-- Admin panel for editing links -->
+      <div id="adminPanel">
+        <h3>Edit Assignment Links</h3>
+        <div style="margin: 15px 0;">
+          <label for="weekSelector">Select Week:</label>
+          <select id="weekSelector">
+            <option value="2">Week 2</option>
+            <option value="3">Week 3</option>
+            <option value="4">Week 4</option>
+            <option value="5">Week 5</option>
+            <option value="6">Week 6</option>
+            <option value="7">Week 7</option>
+            <option value="8">Week 8</option>
+            <option value="9">Week 9</option>
+            <option value="10">Week 10</option>
+            <option value="11">Week 11</option>
+          </select>
+        </div>
+        <div style="margin: 10px 0;">
+          <label for="buttonText">Button Text:</label><br>
+          <input type="text" id="buttonText" style="width: 100%;" placeholder="New button text">
+        </div>
+        <div style="margin: 10px 0;">
+          <label for="buttonURL">URL:</label><br>
+          <input type="text" id="buttonURL" style="width: 100%;" placeholder="https://example.com/assignment">
+        </div>
+        <button id="saveChangesButton" class="panel-button save-button">Save Changes</button>
+        <button id="closeAdminButton" class="panel-button close-button">Close</button>
+      </div>
+    </footer>
+  </div>
+  
+  <script>
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get references to views
+      const dashboardView = document.getElementById('dashboardView');
+      const assignmentView = document.getElementById('assignmentView');
+      const assignmentTitle = document.getElementById('assignmentTitle');
+      const backButton = document.getElementById('backButton');
+      const adminPanel = document.getElementById('adminPanel');
+      const editLinksButton = document.getElementById('editLinksButton');
+      const closeAdminButton = document.getElementById('closeAdminButton');
+      const saveChangesButton = document.getElementById('saveChangesButton');
+      
+      // Setup all assignment buttons
+      const assignmentButtons = document.querySelectorAll('.assignment-button');
+      assignmentButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const week = this.getAttribute('data-week');
+          const url = this.getAttribute('data-url');
+          const title = this.getAttribute('data-title');
+          
+          // If URL is provided and not empty, navigate to external URL
+          if (url && url.trim() !== '') {
+            window.location.href = url;
+            return;
+          }
+          
+          // Otherwise show assignment view
+          assignmentTitle.textContent = title || `Week ${week} Assignment`;
+          dashboardView.style.display = 'none';
+          assignmentView.style.display = 'block';
+          window.scrollTo(0, 0);
         });
+      });
+      
+      // Setup back button
+      backButton.addEventListener('click', function() {
+        dashboardView.style.display = 'block';
+        assignmentView.style.display = 'none';
+      });
+      
+      // Setup form submission
+      const assignmentForm = document.getElementById('assignmentForm');
+      assignmentForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Assignment submitted successfully!');
+      });
+      
+      // Admin panel functionality
+      editLinksButton.addEventListener('click', function() {
+        adminPanel.style.display = 'block';
+      });
+      
+      closeAdminButton.addEventListener('click', function() {
+        adminPanel.style.display = 'none';
+      });
+      
+      saveChangesButton.addEventListener('click', function() {
+        const weekNum = document.getElementById('weekSelector').value;
+        const newText = document.getElementById('buttonText').value;
+        const newUrl = document.getElementById('buttonURL').value;
         
-        // Ensure all form elements are properly initialized
-        document.addEventListener("DOMContentLoaded", function() {
-            console.log("Form initialized and ready");
+        if (newText.trim() === '' && newUrl.trim() === '') {
+          alert('Please enter either new button text or URL');
+          return;
+        }
+        
+        // Find button for selected week
+        assignmentButtons.forEach(button => {
+          if (button.getAttribute('data-week') === weekNum) {
+            // Update button text if provided
+            if (newText.trim() !== '') {
+              button.textContent = newText;
+              button.setAttribute('data-title', newText);
+            }
+            
+            // Update URL
+            button.setAttribute('data-url', newUrl);
+            
+            alert(`Week ${weekNum} button updated successfully!`);
+            
+            // Clear form fields
+            document.getElementById('buttonText').value = '';
+            document.getElementById('buttonURL').value = '';
+          }
         });
-    </script>
+      });
+    });
+  </script>
 </body>
 </html>
